@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <style>
+      .heading {
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      .button {
+        padding: 20px 50px;
+        background-color: yellow;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        color: rgb(58, 63, 54);
+        font-size: 1.25rem;
+      }
+      table,
+      th,
+      td {
+        border: solid 1px #ddd;
+        border-collapse: collapse;
+        padding: 2px 3px;
+        text-align: center;
+      }
+      th {
+        font-weight: bold;
+      }
+    </style>
+    <div id="app">
+      <div>
+        <h1 class="heading">ELIXER HACKTOBER COMMENTS</h1>
+        <button onclick="tableFromJson()" class="button">
+          Get all comments
+        </button>
+        <p id="showData"></p>
+      </div>
+    </div>
+    <script src="src/index.js"></script>
+    <script>
+      let tableFromJson = () => {
+        const data = fecthAllComments();
+        console.log("data is", data);
+
+        // the json data.
+        const myBooks = [
+          {
+            user: "AkashB2208",
+            message: "@Anv3sh pls assign it to me",
+            issue_url:
+              "https://api.github.com/repos/ElixirTechCommunity/Blogging/issues/5"
+          },
+          {
+            user: "AkashB2208",
+            message: "@Anv3sh pls assign it to me",
+            issue_url:
+              "https://api.github.com/repos/ElixirTechCommunity/Blogging/issues/5"
+          },
+          {
+            user: "AkashB2208",
+            message: "@Anv3sh pls assign it to me",
+            issue_url:
+              "https://api.github.com/repos/ElixirTechCommunity/Blogging/issues/5"
+          }
+        ];
+
+        // Extract value from table header.
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        let col = [];
+        console.log("script tag is running");
+        for (let i = 0; i < myBooks.length; i++) {
+          for (let key in myBooks[i]) {
+            if (col.indexOf(key) === -1) {
+              col.push(key);
+            }
+          }
+        }
+
+        // Create table.
+        const table = document.createElement("table");
+
+        // Create table header row using the extracted headers above.
+        let tr = table.insertRow(-1); // table row.
+
+        for (let i = 0; i < col.length; i++) {
+          let th = document.createElement("th"); // table header.
+          th.innerHTML = col[i];
+          tr.appendChild(th);
+        }
+
+        // add json data to the table as rows.
+        for (let i = 0; i < myBooks.length; i++) {
+          tr = table.insertRow(-1);
+
+          for (let j = 0; j < col.length; j++) {
+            let tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = myBooks[i][col[j]];
+          }
+        }
+
+        // Now, add the newly created table with json data, to a container.
+        const divShowData = document.getElementById("showData");
+        divShowData.innerHTML = "";
+        divShowData.appendChild(table);
+      };
+    </script>
+  </body>
+</html>
